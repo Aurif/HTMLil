@@ -1,6 +1,12 @@
+function httpGet(url)
+    local connection = http.get(url)
+    local data = connection.readAll()
+    connection.close()
+    return data
+end
+
 function installGithubLibrary(url, libName)
-    local remoteLastUpdate =
-        textutils.unserialiseJSON(http.get("https://api.github.com/repos/" .. url).readAll())["pushed_at"]
+    local remoteLastUpdate = textutils.unserialiseJSON(httpGet("https://api.github.com/repos/" .. url))["pushed_at"]
     local localLastUpdate = nil
     local markerFile = fs.open(libName .. ".lastUpdate", "r")
     if f ~= nil then
@@ -14,10 +20,10 @@ function installGithubLibrary(url, libName)
     print("Updating " .. libName .. "...")
 
     local treeUrl = "https://api.github.com/repos/" .. url .. "/git/trees/main?recursive=10"
-    local fileList = textutils.unserialiseJSON(http.get(treeUrl).readAll())["tree"]
+    local fileList = textutils.unserialiseJSON(httpGet(treeUrl))["tree"]
     for _, file in pairs(fileList) do
         if file.type == "blob" and file.path:find("^src/") ~= nil then
-            local fileContent = http.get("https://raw.githubusercontent.com/" .. url .. "/main/" .. file.path).readAll()
+            local fileContent = httpGet("https://raw.githubusercontent.com/" .. url .. "/main/" .. file.path)
             local localFile = fs.open(file.path:sub(4), "w")
             localFile.write(fileContent)
             localFile.close()
