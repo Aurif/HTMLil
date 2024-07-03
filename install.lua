@@ -14,7 +14,7 @@ function installGithubLibrary(url, libName)
     print("Updating " .. libName .. "...")
 
     local treeUrl = "https://api.github.com/repos/" .. url .. "/git/trees/main?recursive=10"
-    local fileList = textutils.unserialiseJSON(http.get(treeUrl))["tree"]
+    local fileList = textutils.unserialiseJSON(http.get(treeUrl).readAll())["tree"]
     for _, file in pairs(fileList) do
         if file.type == "blob" and file.path:find("^src/") ~= nil then
             local fileContent = http.get("https://raw.githubusercontent.com/" .. url .. "/main/" .. file.path).readAll()
