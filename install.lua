@@ -10,6 +10,7 @@ function installGithubLibrary(url, libName)
     local localLastUpdate = nil
     local markerFile = fs.open(libName .. ".lastUpdate", "r")
     if f ~= nil then
+        print("huh?")
         localLastUpdate = f.readAll()
         f.close()
     end
