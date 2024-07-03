@@ -24,7 +24,7 @@ function installGithubLibrary(url, libName)
     for _, file in pairs(fileList) do
         if file.type == "blob" and file.path:find("^src/") ~= nil then
             local fileContent = httpGet("https://raw.githubusercontent.com/" .. url .. "/main/" .. file.path)
-            local localFile = fs.open(file.path:sub(4), "w")
+            local localFile = fs.open(libName .. "/" .. file.path:sub(4), "w")
             localFile.write(fileContent)
             localFile.close()
         end
