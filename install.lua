@@ -13,6 +13,7 @@ function installGithubLibrary(url, libName)
         localLastUpdate = f.readAll()
         f.close()
     end
+    print(remoteLastUpdate, localLastUpdate)
     if remoteLastUpdate == localLastUpdate then
         print(libName .. " is up to date")
         return
