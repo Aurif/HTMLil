@@ -9,12 +9,10 @@ function installGithubLibrary(url, libName)
     local remoteLastUpdate = textutils.unserialiseJSON(httpGet("https://api.github.com/repos/" .. url))["pushed_at"]
     local localLastUpdate = nil
     local markerFile = fs.open(libName .. ".lastUpdate", "r")
-    if f ~= nil then
-        print("huh?")
-        localLastUpdate = f.readAll()
-        f.close()
+    if markerFile ~= nil then
+        localLastUpdate = markerFile.readAll()
+        markerFile.close()
     end
-    print(remoteLastUpdate, localLastUpdate)
     if remoteLastUpdate == localLastUpdate then
         print(libName .. " is up to date")
         return
