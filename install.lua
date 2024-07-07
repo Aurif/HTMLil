@@ -22,9 +22,9 @@ function installGithubLibrary(url, libName)
     local treeUrl = "https://api.github.com/repos/" .. url .. "/git/trees/main?recursive=10"
     local fileList = textutils.unserialiseJSON(httpGet(treeUrl))["tree"]
     for _, file in pairs(fileList) do
-        if file.type == "blob" and file.path:find("^src/") ~= nil then
+        if file.type == "blob" and file.path:find("^htmlil/") ~= nil then
             local fileContent = httpGet("https://raw.githubusercontent.com/" .. url .. "/main/" .. file.path)
-            local localFile = fs.open(libName .. "/" .. file.path:sub(4), "w")
+            local localFile = fs.open(libName .. "/" .. file.path:sub(7), "w")
             localFile.write(fileContent)
             localFile.close()
         end
