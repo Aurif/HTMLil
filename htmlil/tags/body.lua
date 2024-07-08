@@ -1,4 +1,4 @@
-function render()
+function render(ctx, children)
     local function termFontUpload(gpu, ctx)
         ctx = ctx or gpu
         local of = io.open("term_font.png", "rb")
@@ -50,9 +50,12 @@ function render()
         return display
     end
 
-    return {
-        renderer = makeDisplay()
+    local extraContext = {
+        renderer = makeDisplay(),
+        posX = 1, posY = 1
     }
+    for _, c in pairs(children) do ctx.render(c, extraContext) end
+    extraContext.renderer.draw()
 end
 
 htmlil.registerTag("body", render)
