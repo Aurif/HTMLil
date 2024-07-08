@@ -3,14 +3,15 @@ require("htmlil")
 document(
     tags.body(
         tags.divColumn(
-            tags.span("owo x3", style.marginTop(5)),
-            tags.span("owo x2"),
-            tags.span("owo x1", style.marginLeft(14)),
-            tags.divRow(tags.span("uwu x3 ", style.marginLeft(14)), tags.span("uwu x2 "), tags.span("uwu x1 ")),
+            style.width(1),
+            tags.span("owo x3"),
+            tags.span("owo x2", style.alignCenterHorizontal()),
+            tags.span("owo x1", style.alignRight()),
             tags.divColumn(
-                tags.span(":3 x3", style.marginBottom(3)),
-                tags.span(":3 x2"),
-                tags.span(":3 x1")
+                style.alignRight(), style.marginTop(20), style.marginRight(14),
+                tags.span("uwu x3", style.alignRight()),
+                tags.span("uuuuuwwwwwuuuuu"),
+                tags.span("uwu x1")
             )
         )
     )

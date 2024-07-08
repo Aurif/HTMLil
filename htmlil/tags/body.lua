@@ -1,4 +1,21 @@
 function render(ctx, children)
+    local extraContext = {
+        posX = 1, posY = 1,
+        outerWidth = ctx.width, outerHeight = ctx.height
+    }
+    for _, c in pairs(children) do ctx.render(c, extraContext) end
+    ctx.renderer.draw()
+end
+
+function calcSize(ctx)
+    local w, h = ctx.renderer.getSize()
+    return {
+        width=w,
+        height=h
+    }
+end
+
+function init()
     local function termFontUpload(gpu, ctx)
         ctx = ctx or gpu
         local of = io.open("term_font.png", "rb")
@@ -35,6 +52,7 @@ function render(ctx, children)
 
     local function makeDisplay()
         local gpu = peripheral.find("tm_gpu") or error("There is no GPU connected to this computer!")
+        gpu.refreshSize()
         gpu.setSize(64)
         gpu.refreshSize()
         local w, h, _, _, resolution = gpu.getSize()
@@ -50,12 +68,11 @@ function render(ctx, children)
         return display
     end
 
-    local extraContext = {
-        renderer = makeDisplay(),
-        posX = 1, posY = 1
-    }
-    for _, c in pairs(children) do ctx.render(c, extraContext) end
-    extraContext.renderer.draw()
+    return {renderer = makeDisplay()}
 end
 
-htmlil.registerTag("body", render)
+htmlil.registerTag("body", {
+    render=render, 
+    calcSize=calcSize,
+    init=init
+})

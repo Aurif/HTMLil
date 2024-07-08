@@ -9,10 +9,12 @@ function context(dict)
         return component.render(extend(extraContext))
     end
 
-    local contextDict = {
+    local expose = {
         extend = extend,
         render = render
     }
+    local contextDict = {}
     for k,v in pairs(dict or {}) do contextDict[k] = v end
+    for k,v in pairs(expose) do contextDict[k] = v end
     return contextDict
 end

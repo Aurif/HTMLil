@@ -2,10 +2,12 @@ function makeMargin(preAttr, postAttr)
     function margin(pixels)
         return {
             preRender = function(ctx) 
+                ctx = ctx.extend({[postAttr] = ctx[postAttr]-pixels}) 
                 if preAttr == nil then return ctx end
                 return ctx.extend({[preAttr] = ctx[preAttr]+pixels}) 
             end,
-            postRender = function(res) return res.extend({[postAttr] = res[postAttr]+pixels}) end
+            postRender = function(res) return res.extend({[postAttr] = res[postAttr]+pixels}) end,
+            postCalcSize = function(res) return res.extend({[postAttr] = res[postAttr]+pixels}) end
         }
     end
     return margin
