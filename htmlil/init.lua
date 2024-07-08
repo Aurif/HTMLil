@@ -1,3 +1,4 @@
-require("htmlil.core")
+require("htmlil.core.core")
 
+require("htmlil.tags.body")
 require("htmlil.tags.span")
