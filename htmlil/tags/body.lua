@@ -18,7 +18,7 @@ end
 function init()
     local function termFontUpload(gpu, ctx)
         ctx = ctx or gpu
-        local of = io.open("term_font.png", "rb")
+        local of = io.open("htmlil/term_font.png", "rb")
         local b = of._handle.read(1)
         local imgBin = {}
         while b do
