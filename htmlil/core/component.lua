@@ -2,7 +2,11 @@ function component(tag, children, params, styles)
     local cachedCalcSize = nil
     local function calcSize(ctx)
         if cachedCalcSize == nil then
-            local currentCalcSize = context(tag.calcSize(ctx, children, table.unpack(params)))
+            local currentCtx = ctx
+            for _, style in pairs(styles) do currentCtx = style.preCalcSize(currentCtx) end
+
+            local currentCalcSize = context(tag.calcSize(currentCtx, children, table.unpack(params)))
+            
             for _, style in pairs(styles) do currentCalcSize = style.postCalcSize(currentCalcSize) end
             cachedCalcSize = currentCalcSize
         end

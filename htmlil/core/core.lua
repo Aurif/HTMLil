@@ -36,7 +36,8 @@ htmlil.registerStyle = function(key, styleHandlersFunc)
             isStyle = true,
             preRender = directHandlers.preRender or defaultFunc,
             postRender = directHandlers.postRender or defaultFunc,
-            postCalcSize = directHandlers.postCalcSize or defaultFunc
+            postCalcSize = directHandlers.postCalcSize or defaultFunc,
+            preCalcSize = directHandlers.preCalcSize or defaultFunc
         }
     end
     style[key] = callable
